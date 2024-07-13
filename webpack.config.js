@@ -1,8 +1,9 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.ts',
-    mode: 'development', // Set mode to 'development' or 'production'
+    mode: 'development',
     module: {
         rules: [
             {
@@ -27,6 +28,14 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
+    plugins: [
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/index.html', to: 'index.html' },
+                { from: 'src/password_manager.wasm', to: 'password_manager.wasm' }
+            ]
+        })
+    ],
     experiments: {
         asyncWebAssembly: true
     }

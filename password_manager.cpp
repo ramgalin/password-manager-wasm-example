@@ -19,13 +19,6 @@ void store_password(const std::string& username, const std::string& password) {
     password_storage[username] = encrypted_password;
 }
 
-std::string retrieve_password(const std::string& username) {
-    if (password_storage.find(username) != password_storage.end()) {
-        return encrypt_decrypt(password_storage[username]);
-    }
-    return "";
-}
-
 bool check_password(const std::string& username, const std::string& password) {
     if (password_storage.find(username) != password_storage.end()) {
         std::string decrypted_password = encrypt_decrypt(password_storage[username]);
@@ -36,6 +29,5 @@ bool check_password(const std::string& username, const std::string& password) {
 
 EMSCRIPTEN_BINDINGS(password_manager) {
     emscripten::function("store_password", &store_password);
-    emscripten::function("retrieve_password", &retrieve_password);
     emscripten::function("check_password", &check_password);
 }
